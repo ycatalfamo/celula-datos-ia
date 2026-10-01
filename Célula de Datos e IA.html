@@ -1,0 +1,477 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Célula de Datos e IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     DESIGN PLAN
+     Layout: dark "control-room" identity, single audience —
+     pymes y comercios. No sales-scheme scaffolding (no paths,
+     no tech-stack grid, no two-track roadmap): just what the
+     célula de datos e IA resuelve, explicado en criollo.
+     ============================================================ */
+  :root{
+    --bg:#0b0f14;
+    --bg-elev:#121821;
+    --bg-elev-2:#182230;
+    --fg:#e9eef2;
+    --fg-muted:#8fa3b3;
+    --fg-dim:#5e7180;
+    --accent:#49f2c2;
+    --accent-2:#ffb454;
+    --border:#223140;
+    --font-display:'Syne', 'Segoe UI', sans-serif;
+    --font-body:'Manrope', 'Segoe UI', sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-body);
+    line-height:1.55;
+    padding-inline:0;
+  }
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+
+  .wrap{
+    max-width:1120px;
+    margin-inline:auto;
+    padding-inline:clamp(18px,5vw,48px);
+  }
+
+  a{color:inherit;}
+
+  h1,h2,h3{
+    font-family:var(--font-display);
+    font-weight:700;
+    text-wrap:balance;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+
+  p{margin:0;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    z-index:20;
+    background:rgba(11,15,20,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding-block:14px;
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(0.92rem,1.6vw,1.1rem);
+    white-space:nowrap;
+  }
+  .brand .dot{color:var(--accent);}
+  .nav-links{
+    display:flex;
+    gap:clamp(10px,2.6vw,24px);
+    font-size:0.88rem;
+    color:var(--fg-muted);
+    flex-wrap:wrap;
+  }
+  .nav-links a{text-decoration:none;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--bg);
+    background:var(--accent);
+    padding:9px 16px;
+    border-radius:999px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding-block:clamp(56px,10vw,104px) clamp(40px,7vw,72px);
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(760px 420px at 82% -10%, rgba(73,242,194,0.14), transparent 60%),
+      radial-gradient(600px 360px at -5% 30%, rgba(255,180,84,0.08), transparent 60%);
+  }
+  .hero-inner{max-width:76ch;}
+  .hero h1{
+    font-size:clamp(2.1rem,4.8vw,3.5rem);
+    line-height:1.06;
+    margin-top:14px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--accent);
+  }
+  .hero-sub{
+    margin-top:20px;
+    max-width:64ch;
+    color:var(--fg-muted);
+    font-size:1.05rem;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:14px;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:0.94rem;
+    text-decoration:none;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--accent);color:#06110d;}
+  .btn-ghost{border-color:var(--border);color:var(--fg);}
+  .btn-ghost:hover{border-color:var(--fg-dim);}
+
+  /* ---------- section heads ---------- */
+  .section-head{max-width:62ch;}
+  .section-head h2{
+    font-size:clamp(1.6rem,3.4vw,2.3rem);
+    margin-top:10px;
+  }
+  section{padding-block:clamp(52px,9vw,92px);border-bottom:1px solid var(--border);}
+
+  /* ---------- services ---------- */
+  .service-list{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    margin-top:36px;
+    border-top:1px solid var(--border);
+  }
+  .service{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:18px;
+    padding-block:26px;
+    border-bottom:1px solid var(--border);
+  }
+  .service-num{
+    font-family:var(--font-mono);
+    color:var(--fg-dim);
+    font-size:0.9rem;
+    padding-top:2px;
+  }
+  .service h3{font-size:1.15rem;}
+  .service .tagline{
+    font-family:var(--font-mono);
+    color:var(--fg-dim);
+    font-size:0.74rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin-top:6px;
+    display:block;
+  }
+  .service p.desc{
+    color:var(--fg-muted);
+    margin-top:10px;
+    max-width:68ch;
+    font-size:0.94rem;
+  }
+
+  /* ---------- cómo empezamos (single track) ---------- */
+  .steps-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(16px,3vw,24px);
+    margin-top:36px;
+  }
+  .step-card{
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px;
+  }
+  .step-card .stepnum{font-family:var(--font-mono);color:var(--accent);font-size:0.8rem;}
+  .step-card h3{font-family:var(--font-display);font-weight:700;font-size:1.05rem;margin-top:10px;}
+  .step-card p{color:var(--fg-muted);font-size:0.9rem;margin-top:8px;}
+
+  /* ---------- contact ---------- */
+  .contact{padding-block:clamp(56px,10vw,100px);border-bottom:none;}
+  .contact-box{
+    background:linear-gradient(135deg, rgba(73,242,194,0.08), rgba(255,180,84,0.05));
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:clamp(28px,5vw,52px);
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:28px;
+    align-items:center;
+  }
+  .contact-box h2{font-size:clamp(1.5rem,3vw,2rem);}
+  .contact-box p{color:var(--fg-muted);margin-top:12px;max-width:50ch;}
+  .contact-field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .contact-field label{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--fg-dim);
+  }
+  .copy-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    font-family:var(--font-mono);
+    font-size:0.9rem;
+  }
+  .copy-btn{
+    margin-left:auto;
+    background:none;
+    border:1px solid var(--border);
+    color:var(--fg-muted);
+    border-radius:7px;
+    padding:6px 10px;
+    font-size:0.75rem;
+    font-family:var(--font-body);
+    font-weight:600;
+    cursor:pointer;
+  }
+  .copy-btn:hover{color:var(--fg);border-color:var(--fg-dim);}
+  .copy-btn:focus-visible, a:focus-visible, .nav-cta:focus-visible, .btn:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  footer{
+    padding-block:28px;
+    text-align:center;
+    color:var(--fg-dim);
+    font-size:0.82rem;
+    border-top:1px solid var(--border);
+  }
+  footer .note{
+    font-family:var(--font-mono);
+    font-size:0.74rem;
+    margin-top:6px;
+    color:var(--fg-dim);
+  }
+
+  @media (max-width:760px){
+    .service{grid-template-columns:1fr;}
+    .steps-grid{grid-template-columns:1fr;}
+    .contact-box{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+  }
+</style>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="dot">●</span>Célula de Datos &amp; IA</div>
+    <div class="nav-links">
+      <a href="#servicios">Qué resolvemos</a>
+      <a href="#como-empezamos">Cómo empezamos</a>
+    </div>
+    <a class="nav-cta" href="#contacto">Hablemos</a>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="hero-inner">
+    <span class="eyebrow">Para pymes y comercios</span>
+    <h1>Un equipo de datos e IA, del tamaño de <em>tu negocio</em>.</h1>
+    <p class="hero-sub">No hace falta ser una empresa grande ni entender de tecnología. Resolvemos, de a un problema concreto por vez, las cosas que hoy te llevan tiempo, plata o dolores de cabeza — con alcance y precio claros desde el principio.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#servicios">Ver qué podemos resolver</a>
+      <a class="btn btn-ghost" href="#contacto">Contanos tu caso</a>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="servicios">
+  <div class="section-head">
+    <span class="eyebrow">Qué resolvemos</span>
+    <h2>Nueve problemas de todos los días que la célula resuelve. La tecnología es lo de menos.</h2>
+    <p style="margin-top:14px;color:var(--fg-muted);font-size:0.96rem;">No hace falta entender de datos ni de IA para saber si algo de esto te suena. No vendemos tecnologías, resolvemos estas situaciones puntuales.</p>
+  </div>
+  <div class="service-list">
+
+    <div class="service">
+      <div class="service-num">01</div>
+      <div>
+        <h3>Un plan claro de qué conviene resolver primero</h3>
+        <span class="tagline">Diagnóstico y estrategia de datos e IA</span>
+        <p class="desc">Antes de construir nada, miramos cómo funciona hoy tu negocio e identificamos qué tarea conviene atacar primero — la que más tiempo te consume o más plata te hace perder.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">02</div>
+      <div>
+        <h3>Sacarte de encima las tareas repetitivas</h3>
+        <span class="tagline">Automatización de procesos con IA</span>
+        <p class="desc">Cargar precios, armar siempre el mismo reporte, responder lo mismo por WhatsApp — identificamos esa tarea y armamos algo que la hace sola, con alguien revisando los casos que lo ameritan.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">03</div>
+      <div>
+        <h3>Anticiparte antes de que el problema pase</h3>
+        <span class="tagline">IA aplicada: modelos predictivos y agentes</span>
+        <p class="desc">Saber qué productos se van a quedar sin stock o qué cliente está por dejar de comprarte, en vez de enterarte cuando ya pasó — con un sistema que aprende de tu propio historial.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">04</div>
+      <div>
+        <h3>Saber cómo va el negocio sin armar el reporte a mano</h3>
+        <span class="tagline">Business Intelligence e ingeniería de datos</span>
+        <p class="desc">Un tablero que se actualiza solo con la información real de tu empresa, y te manda un resumen en palabras simples de qué cambió esta semana y por qué.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">05</div>
+      <div>
+        <h3>Una herramienta pensada para cómo trabaja tu equipo</h3>
+        <span class="tagline">Diseño y desarrollo de aplicaciones a medida</span>
+        <p class="desc">Un catálogo que tus vendedores consultan desde el celular, un buscador que entiende aunque escriban mal, un sistema simple para lo que hoy hacés con Excel — construido a medida, en vez de forzar tu operación a entrar en un programa genérico.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">06</div>
+      <div>
+        <h3>Saber cuánto ganás realmente en cada producto</h3>
+        <span class="tagline">Planificación y control de gestión</span>
+        <p class="desc">Presupuestos y seguimiento del negocio con números actualizados, en lugar de una planilla que arma una sola persona a mano cada fin de mes.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">07</div>
+      <div>
+        <h3>Que el equipo realmente use lo que se implementa</h3>
+        <span class="tagline">Adopción de IA y gestión del cambio</span>
+        <p class="desc">Instalar la herramienta no alcanza: si a la semana el equipo vuelve a la planilla de siempre, no sirvió de nada. Capacitamos y acompañamos hasta que el cambio queda instalado de verdad.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">08</div>
+      <div>
+        <h3>Que nada se caiga sin que alguien lo resuelva</h3>
+        <span class="tagline">Soporte y mantenimiento continuo</span>
+        <p class="desc">Un tiempo de respuesta definido para cuando algo falla, en vez de depender de que alguien se acuerde de arreglarlo.</p>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="service-num">09</div>
+      <div>
+        <h3>Dejar de armar facturas y fichas de clientes a mano</h3>
+        <span class="tagline">Facturación, CRM y gestión de clientes a medida</span>
+        <p class="desc">Facturación, datos de cada cliente, seguimiento de ventas y cobros pendientes, hoy repartidos en dos o tres Excel que no se hablan entre sí, reunidos en un CRM propio diseñado para cómo vendés realmente — sin pagar licencias por usuario de una herramienta genérica que después nadie usa.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap" id="como-empezamos">
+  <div class="section-head">
+    <span class="eyebrow">Cómo empezamos</span>
+    <h2>Un primer paso chico, para que nos conozcas sin arriesgar nada.</h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <span class="stepnum">Paso 1</span>
+      <h3>Nos contás tu problema</h3>
+      <p>Una charla corta para entender qué te está pasando hoy, sin tecnicismos.</p>
+    </div>
+    <div class="step-card">
+      <span class="stepnum">Paso 2</span>
+      <h3>Te proponemos algo puntual</h3>
+      <p>Un alcance chico, con precio y plazo cerrados de antemano, enfocado en un solo problema.</p>
+    </div>
+    <div class="step-card">
+      <span class="stepnum">Paso 3</span>
+      <h3>Lo entregamos y lo sostenemos</h3>
+      <p>Una vez resuelto, seguís vos: el soporte continuo queda como opción, no como condición.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact wrap" id="contacto">
+  <div class="contact-box">
+    <div>
+      <h2>¿Tenés un proceso que se resuelve solo con Excel y paciencia?</h2>
+      <p>Contanos tu caso y en una primera charla vemos cuál de estos ocho problemas es el que más te conviene resolver primero.</p>
+    </div>
+    <div class="contact-field">
+      <label for="contact-email">Escribinos</label>
+      <div class="copy-row">
+        <span id="contact-email">hola@tumarca.com</span>
+        <button class="copy-btn" type="button" onclick="copyEmail()">Copiar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Célula de Datos &amp; IA — un equipo de datos e IA para pymes y comercios.
+    <div class="note">Nombre de marca y dirección de contacto provisorios — reemplazar antes de publicar.</div>
+  </div>
+</footer>
+
+<script>
+  function copyEmail(){
+    var text = document.getElementById('contact-email').textContent;
+    var btn = event.currentTarget;
+    var original = btn.textContent;
+    function done(ok){
+      btn.textContent = ok ? 'Copiado' : 'No se pudo copiar';
+      setTimeout(function(){ btn.textContent = original; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); }).catch(function(){ done(false); });
+    } else {
+      done(false);
+    }
+  }
+</script>
+
+</body></html>
